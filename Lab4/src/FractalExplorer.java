@@ -18,7 +18,7 @@ public class FractalExplorer {
 
     public void createAndShowGUI() {
         JFrame jfrm = new JFrame("Fractal");
-        JButton jbt = new JButton("СБРОС СУКА!!!!");
+        JButton jbt = new JButton("Reset");
         jfrm.add(jbt, BorderLayout.SOUTH);
         jimage = new JImageDisplay(801,801);
         jfrm.add(jimage, BorderLayout.CENTER);
@@ -26,7 +26,7 @@ public class FractalExplorer {
         jfrm.pack();
         jfrm.setVisible(true);
         jfrm.setResizable(false);
-
+        jbt.addActionListener(new TestActionListener());
 
     }
 
