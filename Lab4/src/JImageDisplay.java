@@ -22,8 +22,8 @@ public class JImageDisplay extends JComponent {
     }
 
     public void clearImage (){
-        for (int i=0;i<=Width;i++){
-            for (int j = 0; j<= Height; j++){
+        for (int i=0;i<Width;i++){
+            for (int j = 0; j<Height; j++){
                 image.setRGB(i, j,0);
             }
         }

@@ -1,7 +1,7 @@
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.Rectangle2D;
+        import java.awt.*;
+        import java.awt.event.*;
+        import java.awt.geom.Rectangle2D;
 
 public class FractalExplorer {
     private int size;
@@ -20,7 +20,7 @@ public class FractalExplorer {
         JFrame jfrm = new JFrame("Fractal");
         JButton jbt = new JButton("Reset");
         jfrm.add(jbt, BorderLayout.SOUTH);
-        jimage = new JImageDisplay(801,801);
+        jimage = new JImageDisplay(size,size);
         jfrm.add(jimage, BorderLayout.CENTER);
         jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jfrm.pack();
@@ -28,11 +28,12 @@ public class FractalExplorer {
         jfrm.setResizable(false);
         jbt.addActionListener(new TestActionListener());
 
+
     }
 
     private void drawFractal() {
-        for (int x = 0; x <= size; x++) {
-            for (int y = 0; y <= size; y++) {
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
                 double xCoord = FractalGenerator.getCoord(range.x, range.x + range.width,
                         size, x);
                 double yCoord = FractalGenerator.getCoord(range.y, range.y + range.height,
@@ -50,10 +51,10 @@ public class FractalExplorer {
     }
 
     public class TestActionListener implements ActionListener {
-            public void actionPerformed(ActionEvent ae){
-                jimage.clearImage();
-                drawFractal();
-            }
+        public void actionPerformed(ActionEvent ae){
+            jimage.clearImage();
+            drawFractal();
+        }
     }
 
     public class TestMouseListener implements MouseListener {
