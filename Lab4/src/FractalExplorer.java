@@ -5,7 +5,7 @@ import java.awt.geom.Rectangle2D;
 
 public class FractalExplorer {
     private int size;
-    private JImageDispley jimage = new JImageDispley(800,800);
+    private JImageDisplay jimage = new JImageDisplay(800,800);
     private FractalGenerator fgen = new Mandelbrot();
     private Rectangle2D.Double range = new Rectangle2D.Double();
 
@@ -19,7 +19,7 @@ public class FractalExplorer {
         JFrame jfrm = new JFrame("Fractal");
         JButton jbt = new JButton("СБРОС СУКА!!!!");
         jfrm.add(jbt, BorderLayout.SOUTH);
-        jfrm.add(new JImageDispley(800, 800), BorderLayout.CENTER);
+        jfrm.add(new JImageDisplay(800, 800), BorderLayout.CENTER);
         jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jfrm.pack();
         jfrm.setVisible(true);
@@ -64,14 +64,8 @@ public class FractalExplorer {
         public void mouseExited(MouseEvent mouseEvent) { }
     }
 
-    public static void main(String args[]){
+    public static void main(String[] args){
         FractalExplorer f = new FractalExplorer(800);
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new FractalExplorer(800);
-            }
-        });
         createAndShowGUI();
         f.drawFractal();
     }

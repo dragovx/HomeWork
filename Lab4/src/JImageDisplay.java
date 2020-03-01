@@ -4,16 +4,16 @@ import java.awt.image.BufferedImage;
 
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
-public class JImageDispley extends JComponent {
+public class JImageDisplay extends JComponent {
     private int Width;
-    private int Heigth;
+    private int Height;
     private BufferedImage image;
 
-    public JImageDispley(int x, int y) {
+    public JImageDisplay(int x, int y) {
         this.Width = x;
-        this.Heigth = y;
-        image = new BufferedImage(Width, Heigth, TYPE_INT_RGB);
-        Dimension Dim = new Dimension(Width, Heigth);
+        this.Height = y;
+        image = new BufferedImage(Width, Height, TYPE_INT_RGB);
+        Dimension Dim = new Dimension(Width, Height);
         setPreferredSize(Dim);
     }
 
@@ -23,7 +23,7 @@ public class JImageDispley extends JComponent {
 
     public void clearImage (){
         for (int i=0;i<=Width;i++){
-            for (int j=0;j<=Heigth;j++){
+            for (int j = 0; j<= Height; j++){
                 image.setRGB(i, j,0);
             }
         }
