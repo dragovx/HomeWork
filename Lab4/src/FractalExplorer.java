@@ -61,15 +61,11 @@ public class FractalExplorer {
 
     public class TestMouseListener implements MouseListener {
         public void mouseClicked(MouseEvent mouseEvent) {
-            double mouseX = MouseInfo.getPointerInfo().getLocation().getX();
-            double mouseY = MouseInfo.getPointerInfo().getLocation().getY();
-            p.x=(int) mouseX-(jimage.getLocationOnScreen().x-7)-7-size/400;
-            p.y=(int) mouseY-(jimage.getLocationOnScreen().y-30)-30-size/400;
-            double Xx = mouseEvent.getX();
-            System.out.println(p);
-            System.out.println(Xx);
+            double mouseX = mouseEvent.getX();
+            double mouseY = mouseEvent.getY();
+            System.out.println(mouseX + mouseY);
             int i=1;
-            fgen.recenterAndZoomRange(range,  -2-(p.x/400)*Math.pow(1.1,i),-1.5 -(p.x/400)*Math.pow(1.1,i),1.1);
+            fgen.recenterAndZoomRange(range,  -2-(mouseX/400)*Math.pow(1.1,i),-1.5 -(mouseY/400)*Math.pow(1.1,i),1.1);
             i++;
             drawFractal();
         }
