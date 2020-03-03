@@ -84,7 +84,8 @@ public class AStarState {
     /**
      * Returns the current number of open waypoints.
      **/
-    public int numOpenWaypoints() {
+    public int numOpenWaypoints()
+    {
         return HashMapOpen.size();
     }
 

@@ -2,10 +2,13 @@ import javax.swing.*;
         import java.awt.*;
         import java.awt.event.*;
         import java.awt.geom.Rectangle2D;
+import java.util.prefs.Preferences;
 
 public class FractalExplorer {
     private int size;
+    private Point p = new Point();
     private JImageDisplay jimage;
+    private int zoom;
     private FractalGenerator fgen = new Mandelbrot();
     private Rectangle2D.Double range = new Rectangle2D.Double();
 
@@ -17,22 +20,16 @@ public class FractalExplorer {
     public void createAndShowGUI() {
         JFrame jfrm = new JFrame("Fractal");
         JButton jbt = new JButton("Reset");
-        JButton jbt1 = new JButton("Zoom");
         jfrm.add(jbt, BorderLayout.SOUTH);
-        jfrm.add(jbt1, BorderLayout.NORTH);
         jimage = new JImageDisplay(size,size);
         jfrm.add(jimage, BorderLayout.CENTER);
         jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jfrm.pack();
+        jfrm.setLocation(100,50);
         jfrm.setVisible(true);
         jfrm.setResizable(false);
         jbt.addActionListener(new TestActionListener());
-        jbt1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                fgen.recenterAndZoomRange(range,0.1,0.1,0.9);
-                drawFractal();
-            }
-        });
+        jimage.addMouseListener(new TestMouseListener());
     }
 
     private void drawFractal() {
@@ -56,6 +53,7 @@ public class FractalExplorer {
 
     public class TestActionListener implements ActionListener {
         public void actionPerformed(ActionEvent ae){
+            jimage.clearImage();
             fgen.getInitialRange(range);
             drawFractal();
         }
@@ -65,7 +63,15 @@ public class FractalExplorer {
         public void mouseClicked(MouseEvent mouseEvent) {
             double mouseX = MouseInfo.getPointerInfo().getLocation().getX();
             double mouseY = MouseInfo.getPointerInfo().getLocation().getY();
-            fgen.recenterAndZoomRange(range,mouseX,mouseY,0.5);
+            p.x=(int) mouseX-(jimage.getLocationOnScreen().x-7)-7-size/400;
+            p.y=(int) mouseY-(jimage.getLocationOnScreen().y-30)-30-size/400;
+            double Xx = mouseEvent.getX();
+            System.out.println(p);
+            System.out.println(Xx);
+            int i=1;
+            fgen.recenterAndZoomRange(range,  -2-(p.x/400)*Math.pow(1.1,i),-1.5 -(p.x/400)*Math.pow(1.1,i),1.1);
+            i++;
+            drawFractal();
         }
         public void mousePressed(MouseEvent mouseEvent) { }
         public void mouseReleased(MouseEvent mouseEvent) { }
@@ -75,7 +81,7 @@ public class FractalExplorer {
     }
 
     public static void main(String[] args){
-        FractalExplorer f = new FractalExplorer(800);
+        FractalExplorer f = new FractalExplorer(700);
         f.createAndShowGUI();
         f.drawFractal();
 

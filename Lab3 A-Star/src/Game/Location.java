@@ -1,7 +1,5 @@
 package Game;
 
-
-
 /**
  * This class represents a specific location in a 2D map.  Coordinates are
  * integer values.
@@ -31,6 +29,6 @@ public class Location
         return xCoord == r.xCoord && yCoord ==r.yCoord;
     }
     public int hashcodeTo(){
-        return (yCoord*100)+(xCoord*1000000);
+        return (yCoord*56)+(xCoord*77);
     }
 }
