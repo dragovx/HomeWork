@@ -6,10 +6,11 @@ import java.util.prefs.Preferences;
 
 public class FractalExplorer {
     private int size;
-    private Point p = new Point();
     private JImageDisplay jimage;
     private double zoom;
-    private FractalGenerator fgen = new Mandelbrot();
+    private FractalGenerator fgen = new BurningShip();
+    //private FractalGenerator fgen = new Tricorn();
+    //private FractalGenerator fgen = new Mandelbrot();
     private Rectangle2D.Double range = new Rectangle2D.Double();
     private int i;
 
@@ -21,9 +22,22 @@ public class FractalExplorer {
     public void createAndShowGUI() {
         JFrame jfrm = new JFrame("Fractal");
         JButton jbt = new JButton("Reset");
-        jfrm.add(jbt, BorderLayout.SOUTH);
+        JButton jbt1 = new JButton("Save images");
+        JLabel jbl = new JLabel("Fractal:");
+        JPanel jpl = new JPanel();
+        JPanel jpl1 = new JPanel();
+        jpl.add(jbt1);
+        jpl.add(jbt);
+        JComboBox<String> jcb = new JComboBox<String>();
+        jpl1.add(jbl);
+        jpl1.add(jcb);
+        jfrm.add(jpl, BorderLayout.SOUTH);
         jimage = new JImageDisplay(size,size);
         jfrm.add(jimage, BorderLayout.CENTER);
+        jcb.addItem("Mandelbrot");
+        jcb.addItem("Tricorn");
+        jcb.addItem("Burning Ship");
+        jfrm.add(jpl1, BorderLayout.NORTH);
         jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jfrm.pack();
         jfrm.setLocation(100,50);
