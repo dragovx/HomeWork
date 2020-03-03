@@ -8,9 +8,10 @@ public class FractalExplorer {
     private int size;
     private Point p = new Point();
     private JImageDisplay jimage;
-    private int zoom;
+    private double zoom;
     private FractalGenerator fgen = new Mandelbrot();
     private Rectangle2D.Double range = new Rectangle2D.Double();
+    private int i;
 
     public FractalExplorer(int size) {
         this.size = size;
@@ -30,6 +31,8 @@ public class FractalExplorer {
         jfrm.setResizable(false);
         jbt.addActionListener(new TestActionListener());
         jimage.addMouseListener(new TestMouseListener());
+        zoom=0.8;
+
     }
 
     private void drawFractal() {
@@ -55,18 +58,17 @@ public class FractalExplorer {
         public void actionPerformed(ActionEvent ae){
             jimage.clearImage();
             fgen.getInitialRange(range);
+            i=0;
             drawFractal();
         }
     }
 
     public class TestMouseListener implements MouseListener {
         public void mouseClicked(MouseEvent mouseEvent) {
-            double mouseX = mouseEvent.getX();
-            double mouseY = mouseEvent.getY();
-            System.out.println(mouseX + mouseY);
-            int i=1;
-            fgen.recenterAndZoomRange(range,  -2-(mouseX/400)*Math.pow(1.1,i),-1.5 -(mouseY/400)*Math.pow(1.1,i),1.1);
-            i++;
+            double mouseX = (mouseEvent.getX()-size/2);
+            double mouseY = (mouseEvent.getY()-size/2);
+            System.out.println(mouseX + " " + mouseY);
+            fgen.recenterAndZoomRange(range, ((mouseX / 266)-0.55), (mouseY / 266), zoom);
             drawFractal();
         }
         public void mousePressed(MouseEvent mouseEvent) { }
