@@ -10,8 +10,8 @@ public class Tricorn extends FractalGenerator {
     }
 
     public int numIterations(double x, double y) {
-        double x1= x;
-        double y1= y;
+        double x1= 0;
+        double y1= 0;
         for(int i=0;i<MAX_ITERATIONS;i++){
             double x2=x1*x1-y1*y1+x;
             double y2=-2*x1*y1+y;
