@@ -5,16 +5,18 @@ import javax.swing.*;
 
 public class FractalExplorer {
     private int size;
-    private double zoom,zoom1;
+    private double centerX=0;
+    private double centerY=0;
+    private double zoom;
     private JImageDisplay jimage;
-    private FractalGenerator fgen = new BurningShip();
-    //private FractalGenerator fgen = new Tricorn();
+    //private FractalGenerator fgen = new BurningShip();
+    private FractalGenerator fgen = new Tricorn();
     //private FractalGenerator fgen = new Mandelbrot();
     private Rectangle2D.Double range = new Rectangle2D.Double();
 
     public FractalExplorer(int size) {
         this.size = size;
-        this.zoom = this.zoom1 = 0.8;
+        this.zoom  = 0.5;
         fgen.getInitialRange(range);
         createAndShowGUI();
     }
@@ -75,16 +77,17 @@ public class FractalExplorer {
             jimage.clearImage();
             fgen.getInitialRange(range);
             drawFractal();
+            centerX=centerY=0;
         }
     }
 
     public class TestMouseListener implements MouseListener {
         public void mouseClicked(MouseEvent mouseEvent) {
-            double mouseX = (mouseEvent.getX()-size/2);
-            double mouseY = (mouseEvent.getY()-size/2);
-            System.out.println(mouseX + " " + mouseY+ " " + zoom);
-            fgen.recenterAndZoomRange(range, ((mouseX / 266)-0.50), (mouseY / 266), zoom);
-            zoom*=zoom1;
+            double mouseX = (mouseEvent.getX()-size/2)/(size/range.width);
+            double mouseY = (mouseEvent.getY()-size/2)/(size/range.width);
+            fgen.recenterAndZoomRange(range, centerX+mouseX,centerY+mouseY, zoom);
+            centerX=centerX+mouseX;
+            centerY=centerY+mouseY;
             jimage.repaint();
             drawFractal();
 
@@ -94,6 +97,15 @@ public class FractalExplorer {
         public void mouseEntered(MouseEvent mouseEvent) { }
         public void mouseExited(MouseEvent mouseEvent) { }
 
+    }
+
+    public double ZoomX(double x){
+
+        return x;
+    }
+    public double ZoomY(double y){
+
+        return y;
     }
 
     public static void main(String[] args){
