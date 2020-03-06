@@ -48,6 +48,7 @@ public class FractalExplorer {
         jfrm.pack();
         jimage.repaint();
         jimage.validate();
+
     }
 
     private void drawFractal() {
