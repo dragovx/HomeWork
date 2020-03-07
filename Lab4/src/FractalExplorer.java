@@ -140,7 +140,6 @@ public class FractalExplorer {
             fgen.recenterAndZoomRange(range, centerX+mouseX,centerY+mouseY, zoom);
             centerX=centerX+mouseX;
             centerY=centerY+mouseY;
-            System.out.println(centerX + " " + centerY);
             jimage.repaint();
             drawFractal();
 
@@ -150,6 +149,29 @@ public class FractalExplorer {
         public void mouseEntered(MouseEvent mouseEvent) { }
         public void mouseExited(MouseEvent mouseEvent) { }
 
+    }
+
+    private class FractalWorker extends SwingWorker<Object,Object>{
+        int y;
+        int [] masx;
+        protected Object doInBackground(){
+            for (int x = 0; x < size; x++) {
+                double Coord = FractalGenerator.getCoord(range.y, range.y + range.height,
+                        size, y);
+                if (fgen.numIterations(x, Coord) == -1) {
+                    masx[x]=setRGB(x, y, 0);
+                } else {
+                    float hue = 0.7f + (float) fgen.numIterations(masx[x], Coord) / 200f;
+                    int rgbColor = Color.HSBtoRGB(hue, 1f, 1f);
+                    masx[x]=drawPixel(x, y, rgbColor);
+                }
+            }
+            return null;
+        }
+        protected void done() {
+
+            super.done();
+        }
     }
 
     public static void main(String[] args){
