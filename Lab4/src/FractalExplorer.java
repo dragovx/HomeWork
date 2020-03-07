@@ -9,14 +9,21 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import static java.lang.Boolean.*;
+
+/**
+ @author dragovx
+ */
 
 public class FractalExplorer {
     private int size;
     private double centerX=0;
     private double centerY=0;
     private double zoom;
+    private JFrame jfrm;
     private JImageDisplay jimage;
     private FractalGenerator fgen;
+    private int rowsremaining;
     private Rectangle2D.Double range = new Rectangle2D.Double();
 
     public FractalExplorer(int size) {
@@ -28,7 +35,7 @@ public class FractalExplorer {
     }
 
     public void createAndShowGUI() {
-        JFrame jfrm = new JFrame("Fractal");
+        jfrm = new JFrame("Fractal");
         jfrm.setLocation(100,50);
         JButton jbt = new JButton("Reset");
         JButton jbt1 = new JButton("Save images");
@@ -36,10 +43,8 @@ public class FractalExplorer {
         JComboBox<String> jcb = new JComboBox<>();
         JPanel jpl = new JPanel();
         JPanel jpl1 = new JPanel();
-        jpl.add(jbt1);
-        jpl.add(jbt);
-        jpl1.add(jbl);
-        jpl1.add(jcb);
+        jpl.add(jbt1); jpl.add(jbt);
+        jpl1.add(jbl); jpl1.add(jcb);
         jimage = new JImageDisplay(size,size);
         jfrm.add(jpl, BorderLayout.SOUTH);
         jfrm.add(jimage, BorderLayout.CENTER);
@@ -48,7 +53,6 @@ public class FractalExplorer {
         jcb.addItem("Tricorn");
         jcb.addItem("Burning Ship");
         jcb.addItem("Norm");
-        jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jbt.addActionListener(new TestActionListener());
         jbt1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -94,20 +98,28 @@ public class FractalExplorer {
                 centerX=centerY=0;
             }
         });
+        jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jfrm.setVisible(true);
         jfrm.setResizable(false);
         jimage.setVisible(true);
-        drawFractal();
         jfrm.pack();
         jimage.validate();
+        drawFractal();
+    }
 
-
+    public void enableUI(boolean val){
+        if (val==TRUE){
+            jfrm.setEnabled(TRUE);
+        } else {
+            jfrm.setEnabled(FALSE);
+        }
     }
 
     private void drawFractal() {
+        enableUI(FALSE);
+        rowsremaining=size;
         for (int y = 0; y < size; y++) {
-            FractalWorker fw = new FractalWorker(y);
-            fw.execute();
+            new FractalWorker(y).execute();
         }
     }
 
@@ -122,11 +134,9 @@ public class FractalExplorer {
 
     public class TestMouseListener implements MouseListener {
         public void mouseClicked(MouseEvent mouseEvent) {
-            double mouseX = (mouseEvent.getX()-(double) size/2)/(size/range.width);
-            double mouseY = (mouseEvent.getY()-(double) size/2)/(size/range.height);
-            fgen.recenterAndZoomRange(range, centerX+mouseX,centerY+mouseY, zoom);
-            centerX=centerX+mouseX;
-            centerY=centerY+mouseY;
+            double mouseX = FractalGenerator.getCoord(range.x, range.x + range.width, size, mouseEvent.getX());
+            double mouseY = FractalGenerator.getCoord(range.y, range.y + range.width, size, mouseEvent.getY());
+            fgen.recenterAndZoomRange(range, mouseX,mouseY, zoom);
             drawFractal();
 
         }
@@ -168,6 +178,10 @@ public class FractalExplorer {
                 jimage.drawPixel(x, y, masx[x]);
             }
             jimage.repaint(0, 0, y, size, 1);
+            rowsremaining--;
+            if (rowsremaining==0){
+                enableUI(TRUE);
+            }
             super.done();
         }
     }
