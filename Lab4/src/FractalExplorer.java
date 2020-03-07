@@ -47,12 +47,13 @@ public class FractalExplorer {
         jcb.addItem("Mandelbrot");
         jcb.addItem("Tricorn");
         jcb.addItem("Burning Ship");
+        jcb.addItem("Norm");
         jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jbt.addActionListener(new TestActionListener());
         jbt1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser chooser = new JFileChooser();
-                FileFilter filter = new FileNameExtensionFilter("jpeg Images", "jpeg");
+                FileFilter filter = new FileNameExtensionFilter("PNG Images", "PNG");
                 chooser.setFileFilter(filter);
                 chooser.setAcceptAllFileFilterUsed(false);
                 if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -60,12 +61,12 @@ public class FractalExplorer {
                     try {
                         BufferedImage image = new BufferedImage(jimage.getHeight(), jimage.getWidth(), BufferedImage.TYPE_INT_RGB);
                         jimage.paint(image.getGraphics());
-                        ImageIO.write(image, "jpeg", new File(file.getAbsolutePath()));
+                        ImageIO.write(image, "PNG", new File(file.getAbsolutePath() + ".PNG"));
                     } catch (IOException ex) {
                         System.out.println("Failed to save image!");
                     }
                 } else {
-                    System.out.println("No file choosen!");
+                    System.out.println("No file chosen!");
                 }
             }
         });
@@ -73,12 +74,19 @@ public class FractalExplorer {
         jcb.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 String src = (String) jcb.getSelectedItem();
-                if (src.equals("Mandelbrot")){
-                    fgen=new Mandelbrot();
-                } else if (src.equals("Tricorn")){
-                    fgen=new Tricorn();
-                } else if (src.equals("Burning Ship")){
-                    fgen=new BurningShip();
+                switch (src){
+                    case "Mandelbrot":
+                        fgen=new Mandelbrot();
+                        break;
+                    case "Tricorn":
+                        fgen=new Tricorn();
+                        break;
+                    case "Burning Ship":
+                        fgen=new BurningShip();
+                        break;
+                    case "Norm":
+                        fgen=new Norm();
+                        break;
                 }
                 jimage.clearImage();
                 fgen.getInitialRange(range);
