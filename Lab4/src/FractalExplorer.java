@@ -99,29 +99,16 @@ public class FractalExplorer {
         jimage.setVisible(true);
         drawFractal();
         jfrm.pack();
-        jimage.repaint();
         jimage.validate();
 
 
     }
 
     private void drawFractal() {
-        for (int x = 0; x < size; x++) {
-            for (int y = 0; y < size; y++) {
-                double xCoord = FractalGenerator.getCoord(range.x, range.x + range.width,
-                        size, x);
-                double yCoord = FractalGenerator.getCoord(range.y, range.y + range.height,
-                        size, y);
-                if (fgen.numIterations(xCoord, yCoord) == -1) {
-                    jimage.drawPixel(x, y, 0);
-                } else {
-                    float hue = 0.7f + (float) fgen.numIterations(xCoord, yCoord) / 200f;
-                    int rgbColor = Color.HSBtoRGB(hue, 1f, 1f);
-                    jimage.drawPixel(x, y, rgbColor);
-                }
-            }
+        for (int y = 0; y < size; y++) {
+            FractalWorker fw = new FractalWorker(y);
+            fw.execute();
         }
-        jimage.repaint();
     }
 
     public class TestActionListener implements ActionListener {
@@ -140,7 +127,6 @@ public class FractalExplorer {
             fgen.recenterAndZoomRange(range, centerX+mouseX,centerY+mouseY, zoom);
             centerX=centerX+mouseX;
             centerY=centerY+mouseY;
-            jimage.repaint();
             drawFractal();
 
         }
@@ -151,31 +137,42 @@ public class FractalExplorer {
 
     }
 
-    private class FractalWorker extends SwingWorker<Object,Object>{
+    private class FractalWorker extends SwingWorker<Object,Object> {
         int y;
-        int [] masx;
-        protected Object doInBackground(){
+        int[] masx;
+
+        public FractalWorker(int y){
+            this.y=y;
+        }
+
+        protected Object doInBackground() {
+            masx = new int[size];
             for (int x = 0; x < size; x++) {
-                double Coord = FractalGenerator.getCoord(range.y, range.y + range.height,
+                double xCoord = FractalGenerator.getCoord(range.x, range.x + range.width,
+                        size, x);
+                double yCoord = FractalGenerator.getCoord(range.y, range.y + range.height,
                         size, y);
-                if (fgen.numIterations(x, Coord) == -1) {
-                    masx[x]=setRGB(x, y, 0);
+                if (fgen.numIterations(xCoord, yCoord) == -1) {
+                    masx[x] = 0;
                 } else {
-                    float hue = 0.7f + (float) fgen.numIterations(masx[x], Coord) / 200f;
+                    float hue = 0.7f + (float) fgen.numIterations(xCoord, yCoord) / 200f;
                     int rgbColor = Color.HSBtoRGB(hue, 1f, 1f);
-                    masx[x]=drawPixel(x, y, rgbColor);
+                    masx[x] = rgbColor;
                 }
             }
             return null;
         }
-        protected void done() {
 
+        protected void done() {
+            for (int x = 0; x < size; x++) {
+                jimage.drawPixel(x, y, masx[x]);
+            }
+            jimage.repaint(0, 0, y, size, 1);
             super.done();
         }
     }
 
-    public static void main(String[] args){
-        new FractalExplorer(700);
+    public static void main(String[] args){ new FractalExplorer(700);
     }
 
 }
