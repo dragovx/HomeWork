@@ -23,4 +23,7 @@ public class Mandelbrot extends FractalGenerator{
         }
         return -1;
     }
+    public String toString() {
+        return "Mandelbrot";
+    }
 }

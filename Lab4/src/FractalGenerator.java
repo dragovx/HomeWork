@@ -54,8 +54,6 @@ public abstract class FractalGenerator {
         range.width = newWidth;
         range.height = newHeight;
     }
-
-
     /**
      * Given a coordinate <em>x</em> + <em>iy</em> in the complex plane,
      * computes and returns the number of iterations before the fractal

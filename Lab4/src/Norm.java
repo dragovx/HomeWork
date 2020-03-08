@@ -22,4 +22,7 @@ public class Norm extends FractalGenerator {
         }
         return MAX_ITERATIONS-iter-1;
     }
+    public String toString() {
+        return "Norm";
+    }
 }

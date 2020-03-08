@@ -23,4 +23,7 @@ public class Tricorn extends FractalGenerator {
         }
         return -1;
     }
+    public String toString() {
+        return "Tricorn";
+    }
 }

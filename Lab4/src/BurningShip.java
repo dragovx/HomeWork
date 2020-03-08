@@ -5,8 +5,8 @@ public class BurningShip extends FractalGenerator {
     public void getInitialRange(Rectangle2D.Double range) {
         range.x=-2;
         range.y=-2.5;
-        range.height=4.5;
-        range.width=3.5;
+        range.height=4;
+        range.width=4;
     }
 
     public int numIterations(double x, double y) {
@@ -21,5 +21,8 @@ public class BurningShip extends FractalGenerator {
             }
         }
         return -1;
+    }
+    public String toString() {
+        return "Burning Ship";
     }
 }
