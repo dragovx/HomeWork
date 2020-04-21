@@ -25,5 +25,4 @@ public class NewThread implements Runnable {
     public boolean getState(){
         return bool;
     }
-
 }
