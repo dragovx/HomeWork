@@ -51,7 +51,6 @@ public class FractalExplorer {
         jcb.addItem(new Mandelbrot());
         jcb.addItem(new Tricorn());
         jcb.addItem(new BurningShip());
-        jcb.addItem(new Norm());
         jbt.addActionListener(new TestActionListener());
         jimage.addMouseListener(new TestMouseListener());
         jbt1.addActionListener(new TestActionListener());
