@@ -2,12 +2,12 @@ import java.net.*;
 import java.util.*;
 import java.io.*;
 
-public class Crawlers {
+public class Crawler2 {
 
     public static final String URL_PREFIX = "http://";
     URLDepthPair depthpair;
 
-    Crawlers(String url, int depth) {
+    Crawler2(String url, int depth) {
         depthpair = new URLDepthPair(url, depth);
     }
 
@@ -46,11 +46,11 @@ public class Crawlers {
 
     public static void main(String[] args) {
 
-        String[] arg1 = new String[]{"http://www.tadviser.ru/", "3", "3"};
-        String[] arg2 = new String[]{"http://www.isua-mtuci.ru/", "3", "3"};
-        String[] arg3 = new String[]{"http://www.mtuci.ru/", "2", "6"};
+        String[] arg1 = new String[]{"http://www.tadviser.ru/", "2", "2"};
+        String[] arg2 = new String[]{"http://www.isua-mtuci.ru/", "2", "3"};
+        String[] arg3 = new String[]{"http://www.mtuci.ru/", "3", "5"};
 
-        args = arg3;
+        args = arg1;
 
         URLDepthPair urlDepthPair = new URLDepthPair(args[0], 0);
         int countDepth = Integer.parseInt(args[1]);
@@ -64,17 +64,14 @@ public class Crawlers {
         LinkedList<Thread> crawlerTasks = new LinkedList<>();
 
         for (int i = 0; i < threadscount; i++) {
-            crawlerTasks.add(new Thread(new CrawlerTask(urlPool)));
+            crawlerTasks.add(new Thread(new CrawlerTask(urlPool, countDepth)));
             crawlerTasks.getLast().start();
         }
-
         while (urlPool.getWaitingThreads() != threadscount) {
         }
-
-        for (Thread crawlerTask : crawlerTasks) {
-            crawlerTask.stop();
+        for (int i = 0; i < crawlerTasks.size(); i++) {
+            crawlerTasks.get(i).stop();
         }
-
         mainlist = urlPool.getResultlist();
         List<URLDepthPair> list = new LinkedList<>(mainlist);
         list.sort(new MySalaryComp());

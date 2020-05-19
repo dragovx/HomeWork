@@ -1,3 +1,4 @@
+
 import java.net.*;
 import java.util.*;
 import java.io.*;
@@ -5,9 +6,10 @@ import java.io.*;
 public class Crawler {
 
     public static final String URL_PREFIX="http://";
+    public static final String URL_PREFIXS="https://";
 
     public static void main(String[] args) {
-        new Crawler(new String[]{"http://www.mtuci.ru/","1"});
+        new Crawler(new String[]{"http://www.tadvisor.ru/","1"});
     }
 
     Crawler(String[] args){
@@ -56,7 +58,7 @@ public class Crawler {
             line=BuffReader.readLine();
             if (line==null){ break; }
             for (String reta : line.split("href=\"")) {
-                if (line.contains("a href=\"") & reta.startsWith(URL_PREFIX)){
+                if (line.contains("a href=\"") & (reta.startsWith(URL_PREFIX))){
                     try {
                         String Link = (reta.substring(0, reta.indexOf("\"")));
                         URLs.add(Link);

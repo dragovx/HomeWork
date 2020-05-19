@@ -5,9 +5,11 @@ public class CrawlerTask implements Runnable {
     URLDepthPair urlDepthPair;
     URLPool urlPool;
     LinkedList<URLDepthPair> newLinks;
+    int count;
 
-    public CrawlerTask(URLPool urlPool) {
+    public CrawlerTask(URLPool urlPool, int count) {
         this.urlPool = urlPool;
+        this.count = count;
     }
 
     @Override
@@ -15,7 +17,7 @@ public class CrawlerTask implements Runnable {
         while (true) {
             urlDepthPair = urlPool.get();
             try {
-                newLinks = new Crawlers(urlDepthPair.getURL(), urlDepthPair.getDepth()).getAllLinks(urlDepthPair.getDepth()+1);
+                newLinks = new Crawler2(urlDepthPair.getURL(), urlDepthPair.getDepth()).getAllLinks(urlDepthPair.getDepth()+1);
                 urlPool.set(newLinks);
             } catch (IOException e) {
                 System.out.println(e);

@@ -1,34 +1,55 @@
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
+import java.util.Objects;
+
 
 public class URLDepthPair {
-    //private String url;
-    String URL;
-    int depth;
-    public URLDepthPair(String URL, int depth){
-        this.URL = URL;
+
+    private int depth;
+    private String URL;
+
+    public URLDepthPair(String URL, int depth) {
         this.depth = depth;
+        this.URL = URL;
     }
-    public boolean Available(){
-        String regex = "\\b(http)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
-        return URL.matches(regex);
+
+    public String getURLS(){
+        return URL;
     }
-    @Override
+
+    public String getURL() { return URL; }
+
+    public int getDepth() { return depth; }
+
     public String toString() {
-        return "URL = "+URL+" Depth = "+depth;
+        return ("|    "+getDepth() + "    |"+" "+getURLS());
+        //return String.format("|%-9s|",getDepth())+getURLS();
     }
-    public String getURL(){
+
+    public String getDocPath() {
         try {
-            java.net.URL url = new URL(this.URL);
-            return url.getHost();
-        }
-        catch (MalformedURLException e) {
-            System.err.println("MalformedURLException: " + e.getMessage());
+            return new URL(URL).getPath();
+        } catch (MalformedURLException e) {
             return null;
         }
     }
+    public String getWebHost() {
+        try {
+            return new URL(URL).getHost();
+        } catch (MalformedURLException e) {
+            return null;
+        }
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof URLDepthPair) {
+            URLDepthPair o = (URLDepthPair)obj;
+            return this.URL.equals(o.getURLS());
+        }
+        return false;
+    }
 
-    public int depth(){
-        return depth;
+    @Override
+    public int hashCode() {
+        return Objects.hash();
     }
 }

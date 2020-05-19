@@ -12,13 +12,17 @@ public class URLDepthPair {
         this.URL = URL;
     }
 
+    public String getURLS(){
+        return URL;
+    }
+
     public String getURL() { return URL; }
 
     public int getDepth() { return depth; }
 
     public String toString() {
-        String stringDepth = Integer.toString(depth);
-        return URL + '\t' + stringDepth;
+        return ("|    "+getDepth() + "    |"+" "+getURLS());
+        //return String.format("|%-9s|",getDepth())+getURLS();
     }
 
     public String getDocPath() {
@@ -35,12 +39,11 @@ public class URLDepthPair {
             return null;
         }
     }
-
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof URLDepthPair) {
             URLDepthPair o = (URLDepthPair)obj;
-            return this.URL.equals(o.getURL());
+            return this.URL.equals(o.getURLS());
         }
         return false;
     }
