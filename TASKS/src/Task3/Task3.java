@@ -3,7 +3,6 @@ package Task3;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 class Task3{
     public static void main(String[] args) {
@@ -12,7 +11,7 @@ class Task3{
         System.out.println(exercise3.checkPerfect(6));
         System.out.println(exercise4.flipEndChars("Cat, dog, and mouse."));
         System.out.println(exercise5.isValidHexCode("#CD5C5C"));
-        System.out.println();
+        System.out.println(exercise6.same(new Integer[]{1, 3, 4, 4, 4},new Integer[] {2, 5, 7}));
         System.out.println(exercise7.isKaprekar(3));
         System.out.println(exercise8.longestZero("01100001011000"));
         System.out.println(exercise9.nextPrime(12));
@@ -134,7 +133,6 @@ class exercise9{
         return true;
     }
 }
-
 
 class exercise10{
     public static boolean rightTriangle(int a, int b, int c){
