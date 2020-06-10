@@ -137,22 +137,16 @@ class exercise7 {
         }
         for (char c: s.toCharArray()){
             if (c!=ch){
-                if (max==1) {
-                    res += ch;
-                } else {
+                if (max==1) res += ch;
+                else {
                     res += ch + "*" + max;
                     max=1;
                 }
-            } else {
-                max++;
-            }
+            } else max++;
             ch = c;
         }
-        if (max == 1) {
-            res += ch;
-        } else {
-            res += ch + "*" + max;
-        }
+        if (max == 1) res += ch;
+        else res += ch + "*" + max;
     return  res;}
 }
 
@@ -179,9 +173,7 @@ class exercise9 {
             b/=10;
         }
         for (int i=0;i<=9;i++){
-            if (amas[i]==3 & bmas[i]==2){
-                return true;
-            }
+            if (amas[i]==3 & bmas[i]==2) return true;
         }
     return false;}
 }
